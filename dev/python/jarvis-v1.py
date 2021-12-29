@@ -20,15 +20,16 @@ import speech_recognition as sr
 from gtts import gTTS
 import os
 import time
-import playsound
+import vlc
 
 #define text to speech program
-def speak(tts):
-    tts = gTTS(text=tts, tld=accent, lang=language,  slow=False)
+def speak(text):
+    tts = gTTS(text=text, tld=accent, lang=language,  slow=False)
     filename = 'voice.mp3'
     tts.save(filename)
-    playsound.playsound(filename)
-
+    speech = vlc.MediaPlayer(filename)
+    speech.play()
+    
 # Initialize recognizer class (for recognizing the speech)
 r = sr.Recognizer()
 
