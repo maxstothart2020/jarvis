@@ -12,6 +12,7 @@ accent = 'ie' #South African
 run = True
 joke = 1
 command = ""
+play = False
 
 #speech to text
 
@@ -22,14 +23,19 @@ import os
 import time
 import vlc
 
-#define text to speech program
+#define functions
+#tts
 def speak(text):
     tts = gTTS(text=text, tld=accent, lang=language,  slow=False)
     filename = 'voice.mp3'
     tts.save(filename)
     speech = vlc.MediaPlayer(filename)
     speech.play()
-    
+
+#beep
+def beep():
+    beep = vlc.MediaPlayer("beep.mp3")
+    beep.play()
 # Initialize recognizer class (for recognizing the speech)
 r = sr.Recognizer()
 
@@ -68,17 +74,20 @@ while run:
         print("")
         print(response)
         speak(response)
+        play = False
         
     """
-    if command != '':
-        if command == name or command == 'hey ' + name or command == 'OK' + name:
+    if command != '' and play == True:
+        if command == name or command == 'hey ' + name or command == 'ok' + name:
             print("")
-            print("Yes " + title)
-            speak("Yes " + title)
+            print("Hello " + title)
+            speak("Hello " + title)
+            play = False
         elif command == 'initiate Lockdown protocol' or command == 'initiate Lockdown procedure' or command == 'activate Lockdown procedure' or command == 'activate Lockdown protocol':
             print("")
             print("Lockdown Protocol Initiated")
             speak("Lockdown Protocol Initiated")
+            play = False
         elif command == 'exit' or command == 'deactivate' or command == 'restart' or command == 'reboot' or command == 'shut down':
             print("")
             print("Shutting down")
@@ -126,11 +135,13 @@ while run:
                 print("That vegan teacher")
                 speak("That vegan teacher")
                 joke = 1
+            play = False
         elif command == 'hello Jarvis':
             response = "Hello" + " " + title
             print("")
             print(response)
             speak(response)
+            play = False
         elif command == "I'm sad" or command == "I am sad" or command == "I feel sad":
             response = "It is OK" + " " + title + ", " + "I am here for you, :)"
             response2 = "It Might be a good Idea to call Arny or Patrick"
@@ -139,6 +150,7 @@ while run:
             speak(response)
             print(response2)
             speak(response2)
+            play = False
         elif command == "I'm angry" or command == "I am angry" or command == "I feel angry":
             if title == "Sir":
                 response = "OK" + " " + title + " It is probably a good Idea to call Patrick or Arny"
@@ -161,6 +173,13 @@ while run:
             print("")
             print(response)
             speak(response)
+        play = False
+    
+    elif command == name or command == 'hey ' + name or command == 'ok' + name:
+        beep()
+        print("initiated")
+        play = True
+
     """
      else:
         run = False
