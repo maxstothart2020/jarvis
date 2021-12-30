@@ -34,6 +34,7 @@ def speak(text):
     tts = gTTS(text=text, tld=accent, lang=language,  slow=False)
     filename = 'voice.mp3'
     tts.save(filename)
+    print(text)
     play(filename)
 
 #init
@@ -50,23 +51,42 @@ while run:
     with mic as source:
         r.adjust_for_ambient_noise(source)
         audio_text = r.listen(source)
-        
     # recoginize_() method will throw a request error if the API is unreachable, hence using exception handling
-        try:
-            
-            # using google speech recognition
-            text = r.recognize_google(audio_text)
-            print(text) #uncomment for debug
-            command = text
-         
-        except:
-             print('Sorry Whave encountered an error retrying now')
-             
+    try:
+        # using google speech recognition
+        text = r.recognize_google(audio_text)
+        print(text) #uncomment for debug
+        command = text
+    except:
+         print('Sorry Whave encountered an error retrying now')
+    """
+    elif command == "" or command == "":
+        response = ""#+" "+title+" "+""
+        speak(responses)
+    """
     if command != '' and init == True:
         if command == 'hey '+name or command == 'ok '+name or command == 'hello '+name:
             response = ("Hello "+title+", how may I help you today?")
             speak(response)
             beep()
+        elif command == "shut down" or command == "stop":
+            speak("processing")
+            speak("Are you sure?")
+            mic = sr.Microphone()
+            with mic as source:
+                r.adjust_for_ambient_noise(source)
+                audio_text = r.listen(source)
+                print("confirm")
+                text = r.recognize_google(audio_text)
+                print(text) #uncomment for debug
+                confirm = text
+            if confirm == "yes":
+                run = False
+    
+
+
+
+        
     elif init == False:
         if command == 'hey '+name or command == 'ok '+name or command == name:
             beep()
