@@ -13,6 +13,6 @@ sudo apt install alsamixer
 #Finish Up
 chmod +x run.sh
 ls
-echo"Done"
-echo"Running Now"
+echo "Done"
+echo "Running Now"
 ./run.sh
