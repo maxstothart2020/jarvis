@@ -1,12 +1,23 @@
+#setup
+#import libraries
+import speech_recognition as sr
+from gtts import gTTS
+import os
+import time
+from pygame import mixer
+
+
 #variables
 #choose if the user should give a title
 title = "Max"
 name = "Friday"
 #title = input("What Should I Call You:")
 
+
 #speech Output Settings
 language = 'en'
 accent = 'ie' #South African
+
 
 #System Variables
 run = True
@@ -14,14 +25,10 @@ joke = 1
 command = ""
 play = False
 
-#speech to text
 
-#import libraries
-import speech_recognition as sr
-from gtts import gTTS
-import os
-import time
-import vlc
+#libary INIT
+mixer.init()
+
 
 #define functions
 #tts
@@ -29,13 +36,15 @@ def speak(text):
     tts = gTTS(text=text, tld=accent, lang=language,  slow=False)
     filename = 'voice.mp3'
     tts.save(filename)
-    speech = vlc.MediaPlayer(filename)
-    speech.play()
-
+    mixer.music.load(filename)
+    mixer.music.play()
+    
 #beep
 def beep():
-    beep = vlc.MediaPlayer("beep.mp3")
-    beep.play()
+    os.system("mpg123 -m beep.mp3")
+
+#main Program
+    
 # Initialize recognizer class (for recognizing the speech)
 r = sr.Recognizer()
 
