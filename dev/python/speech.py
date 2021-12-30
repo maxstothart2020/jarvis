@@ -31,4 +31,4 @@ def speak(text):
 
     
 #run function speak
-speak("the weather is cloudy")
+speak("hello")
