@@ -1,8 +1,8 @@
 #!/bin/sh
 #Install python and supports
 echo "Installing Python3 and supports"
-sudo apt install python3 python3-pip python3-pyaudio alsamixer -y
-
+sudo apt install python3 python3-pip python3-pyaudio
+sudo apt install alsamixer -y
 #Install Python Modules Using PIP
 echo "Installing python libaries using Pip"
 pip install gtts
