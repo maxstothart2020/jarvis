@@ -3,7 +3,7 @@
 #user editable variables
 language = 'en'
 accent = 'co.za' #south african?
-name = 'Friday' #Name of the system
+name = 'Jarvis' #Name of the system
 title = 'Sir' #What The system calls you
 
 #system Variables
@@ -16,6 +16,7 @@ from gtts import gTTS
 import time
 from pygame import mixer
 from mutagen.mp3 import MP3
+from datetime import datetime
 
 #Define functions
 
@@ -60,9 +61,9 @@ while run:
     except:
          print('Sorry Whave encountered an error retrying now')
     """
-    elif command == "" or command == "":
-        response = ""#+" "+title+" "+""
-        speak(responses)
+        elif command == "" or command == "":
+            response = ""#+" "+title+" "+""
+            speak(responses)
     """
     if command != '' and init == True:
         if command == 'hey '+name or command == 'ok '+name or command == 'hello '+name:
@@ -76,17 +77,20 @@ while run:
             with mic as source:
                 r.adjust_for_ambient_noise(source)
                 audio_text = r.listen(source)
-                print("confirm")
+                print("processing")
                 text = r.recognize_google(audio_text)
                 print(text) #uncomment for debug
                 confirm = text
             if confirm == "yes":
                 run = False
-    
-
-
-
-        
+        elif command == "what time is it" or command == "what is the time" or command == "what's the time":
+            now = datetime.now()
+            dt_string = now.strftime("%H:%M:%S")
+            speak(dt_string)
+        elif command == "what day is it" or command == "what is the day" or command == "what's the day today":
+            now = datetime.now()
+            dt_string = now.strftime("%d/%m/%Y")
+            speak(dt_string)
     elif init == False:
         if command == 'hey '+name or command == 'ok '+name or command == name:
             beep()
